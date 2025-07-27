@@ -1,0 +1,33 @@
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #030712;
+    color: #F9FAFB;
+}
+.ticker-up { color: #22C55E; text-shadow: 0 0 12px #22C55E; }
+.ticker-down { color: #EF4444; text-shadow: 0 0 12px #EF4444; }
+.btn-primary:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4); }
+.modal { transition: opacity 0.3s ease, transform 0.3s ease; }
+.leverage-btn.active, .pair-btn.active {
+    background-color: #4F46E5;
+    color: white;
+    box-shadow: 0 0 15px rgba(79, 70, 229, 0.5);
+}
+#price-chart {
+    border-radius: 0.5rem;
+    background: linear-gradient(180deg, rgba(31, 41, 55, 0.2) 0%, rgba(17, 24, 39, 0.4) 100%);
+}
+.tab-btn.active { background-color: #4F46E5; color: white; }
+.tab-content { display: none; }
+.tab-content.active { display: block; animation: fadeIn 0.5s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.impact-high { background-color: #7f1d1d; }
+.impact-medium { background-color: #854d0e; }
+.impact-low { background-color: #166534; }
+.sentiment-bar { transition: width 0.5s ease-in-out; }
+.news-flash {
+    animation: flash 1s ease-out;
+}
+@keyframes flash {
+    0%, 100% { background-color: #b91c1c; }
+    50% { background-color: #fde047; color: #1f2937; }
+}
