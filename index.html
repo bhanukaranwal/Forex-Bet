@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Forex Bet - Professional Edition</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="flex items-center justify-center min-h-screen p-2 sm:p-4 bg-gray-900">
+
+    <div class="w-full max-w-2xl mx-auto bg-gray-800 rounded-2xl shadow-2xl p-4 sm:p-6 space-y-4">
+        
+        <!-- Header -->
+        <div class="text-center">
+            <h1 class="text-3xl font-bold text-white tracking-wider">FOREX BET</h1>
+            <p class="text-indigo-400">Professional Edition</p>
+        </div>
+
+        <!-- Wallet & Time -->
+        <div class="grid grid-cols-3 gap-4 text-center bg-gray-900/50 p-4 rounded-lg">
+            <div>
+                <p class="text-sm text-gray-400">WALLET</p>
+                <p id="wallet-balance" class="text-xl font-semibold text-white">$1,000.00</p>
+            </div>
+            <div>
+                <p class="text-sm text-gray-400">MARKET</p>
+                <p id="active-market" class="text-xl font-semibold text-white">USD/GROK</p>
+            </div>
+            <div>
+                <p class="text-sm text-gray-400">GAME TIME</p>
+                <p id="game-time" class="text-xl font-mono text-white">09:00</p>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="bg-gray-900/50 p-1 rounded-lg grid grid-cols-4 gap-1 text-sm">
+            <button class="tab-btn py-2 rounded-md transition active" data-tab="trade">Trade</button>
+            <button class="tab-btn py-2 rounded-md transition" data-tab="analysis">Analysis</button>
+            <button class="tab-btn py-2 rounded-md transition" data-tab="calendar">Calendar</button>
+            <button class="tab-btn py-2 rounded-md transition" data-tab="dashboard">Dashboard</button>
+        </div>
+
+        <!-- Tab Content -->
+        <div>
+            <!-- Trade Tab -->
+            <div id="trade-content" class="tab-content active space-y-4">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <div class="md:col-span-2 space-y-2">
+                        <div class="flex justify-between items-baseline">
+                            <p class="text-lg text-gray-300">Exchange Rate</p>
+                            <p id="current-rate" class="text-4xl font-bold tracking-tighter">1.2000</p>
+                        </div>
+                        <canvas id="price-chart" width="400" height="170" class="w-full"></canvas>
+                    </div>
+                    <div class="space-y-4">
+                        <div id="pair-selector" class="bg-gray-900/50 p-2 rounded-lg space-y-2">
+                            <button class="pair-btn w-full py-2 rounded-md transition text-sm active" data-pair="USD/GROK">USD/GROK</button>
+                            <button class="pair-btn w-full py-2 rounded-md transition text-sm" data-pair="BTC/CREN">BTC/CREN</button>
+                        </div>
+                        <div id="leverage-selector" class="bg-gray-900/50 p-1 rounded-lg grid grid-cols-3 gap-1">
+                             <button class="leverage-btn py-2 rounded-md transition text-xs active" data-leverage="1">1x</button>
+                             <button class="leverage-btn py-2 rounded-md transition text-xs" data-leverage="5">5x</button>
+                             <button class="leverage-btn py-2 rounded-md transition text-xs" data-leverage="10">10x</button>
+                             <button class="leverage-btn py-2 rounded-md transition text-xs" data-leverage="20">20x</button>
+                             <button class="leverage-btn py-2 rounded-md transition text-xs" data-leverage="50">50x</button>
+                        </div>
+                    </div>
+                </div>
+                <div id="news-feed-container" class="bg-gray-700/60 p-3 rounded-lg transition-colors duration-500">
+                    <p class="text-sm font-semibold text-indigo-400 mb-1">BREAKING NEWS</p>
+                    <p id="news-feed" class="text-sm text-gray-200 h-10 flex items-center justify-center text-center">Market awaits opening bell...</p>
+                </div>
+                <div id="betting-controls" class="space-y-4">
+                    <div class="relative">
+                        <span class="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-lg">$</span>
+                        <input type="number" id="bet-amount" placeholder="Enter bet amount" class="w-full bg-gray-700 border border-gray-600 rounded-lg py-3 pl-8 pr-4 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button id="bet-up" class="btn-primary bg-green-600 hover:bg-green-500 text-white font-bold py-3 rounded-lg text-lg">BET UP</button>
+                        <button id="bet-down" class="btn-primary bg-red-600 hover:bg-red-500 text-white font-bold py-3 rounded-lg text-lg">BET DOWN</button>
+                    </div>
+                </div>
+                <div id="result-display" class="hidden text-center space-y-3 p-4 bg-gray-900/50 rounded-lg"></div>
+            </div>
+
+            <!-- Analysis Tab -->
+            <div id="analysis-content" class="tab-content space-y-4">
+                <h3 class="text-xl font-bold text-center text-white">AI Analyst Desk</h3>
+                <div class="bg-gray-900/50 p-4 rounded-lg space-y-3">
+                    <p class="font-semibold text-indigo-400">Market Sentiment</p>
+                    <div class="w-full bg-gray-700 rounded-full h-4">
+                        <div id="sentiment-bar" class="sentiment-bar h-4 rounded-full"></div>
+                    </div>
+                    <p id="sentiment-text" class="text-center font-bold text-lg"></p>
+                </div>
+                <div class="bg-gray-900/50 p-4 rounded-lg space-y-2">
+                     <p class="font-semibold text-indigo-400">Technical Summary</p>
+                     <p id="technical-analysis" class="text-sm text-gray-300 h-12"></p>
+                </div>
+                 <div class="bg-gray-900/50 p-4 rounded-lg space-y-2">
+                     <p class="font-semibold text-indigo-400">Fundamental Outlook</p>
+                     <p id="fundamental-analysis" class="text-sm text-gray-300 h-12"></p>
+                </div>
+            </div>
+
+            <!-- Calendar Tab -->
+            <div id="calendar-content" class="tab-content space-y-3">
+                <h3 class="text-xl font-bold text-center text-white">Global Economic Calendar</h3>
+                <div id="calendar-events" class="space-y-2 max-h-96 overflow-y-auto pr-2"></div>
+            </div>
+
+            <!-- Dashboard Tab -->
+            <div id="dashboard-content" class="tab-content space-y-4">
+                <h3 class="text-xl font-bold text-center text-white">Trader's Dashboard</h3>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+                    <div class="bg-gray-900/50 p-3 rounded-lg"><p class="text-sm text-gray-400">Win / Loss Ratio</p><p id="win-loss-ratio" class="text-2xl font-bold">-</p></div>
+                    <div class="bg-gray-900/50 p-3 rounded-lg"><p class="text-sm text-gray-400">Profit Factor</p><p id="profit-factor" class="text-2xl font-bold">-</p></div>
+                    <div class="bg-gray-900/50 p-3 rounded-lg"><p class="text-sm text-gray-400">Avg. P/L</p><p id="avg-pl" class="text-2xl font-bold">-</p></div>
+                </div>
+                <div>
+                    <p class="text-center text-gray-300 mb-2">Last 10 Trades P/L</p>
+                    <div id="pl-chart" class="h-40 bg-gray-900/50 rounded-lg p-2 flex items-end justify-center space-x-1"></div>
+                </div>
+                <div id="trade-history" class="space-y-2 max-h-60 overflow-y-auto pr-2"></div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modals -->
+    <div id="game-over-modal" class="modal fixed inset-0 bg-black bg-opacity-75 flex items-center justify-center p-4 opacity-0 pointer-events-none">
+        <div class="modal-content bg-gray-800 rounded-2xl shadow-xl p-8 max-w-md w-full text-center transform scale-95">
+            <h2 class="text-3xl font-bold text-red-500 mb-2">LIQUIDATED</h2>
+            <p class="text-gray-300 mb-6">Your wallet is empty. The market has claimed another victim.</p>
+            <button id="play-again-btn" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold py-3 px-4 rounded-lg transition text-lg">Start New Career</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
